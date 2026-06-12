@@ -30,7 +30,7 @@
 | 07 | installers | kiro | accepted (merged 94bec15) | 1/2 | 1 HIGH + 3 MED → all fixed | accept after fix; 16 tests incl. byte-clean uninstall + shared-entry precision |
 | 08 | watcher + spawn | codex | accepted (merged a062838) | 1/2 | NO_DEFECTS | accept; singleton logic verified |
 | 09 | companion TUI + voice | kiro | accepted (merged) | 1/2 | 1 HIGH + 1 MED → fixed | accept after fix; verbatim art/voice verified, purity verified, 23 tests |
-| 10 | CLI wiring | kiro | planned | 0/2 | — | — |
+| 10 | CLI wiring | kiro | accepted (merged) | 1/2 | 2 MED → fixed | accept after fix; gate incl. build + --help (11 cmds), 90 tests on main |
 | 11 | e2e + polish | codex | planned | 0/2 | — | — |
 
 ## Decisions
@@ -49,3 +49,4 @@
 - 2026-06-12 ~11:40: task 01 rerun wrote all files but codex sandbox BLOCKS NETWORK → its npm install hung. Resolution: orchestrator runs npm install + gate outside the sandbox (mechanical infra, not implementation). Standing practice: worktrees get `npm ci` before delegation; briefs' npm-install step is orchestrator's job.
 - 2026-06-12 ~11:45: task 01 gate green (typecheck/6 tests/build), kiro cross-review NO_DEFECTS, Claude review accept → merged to main (29fa3fb). Wave 1 parallel fired: 02+04 kiro, 03 codex, worktrees loopy-wt-{02,03,04}, 6-min stall watchdog armed.
 - 2026-06-12 ~16:20: session resumed after interruption. Task 09: kiro fix cycle (codex cross-review: HIGH d/s no index advance, MED required tick field) had completed pre-interruption; re-gate green (typecheck + 23 tests; full suite 57 in wt, 80 on main post-merge), Claude review accept → merged to main. Wave 3 closes; task 10 (CLI wiring, kiro) unblocked.
+- 2026-06-12 ~16:35: task 10 — kiro one-shot (2m44s), gate green first try (8 CLI tests, build, --help). Codex cross-review 2 MED (snoozed proposals never return to inbox; --companion persists arbitrary strings) → kiro fix cycle → re-gate green (90 tests), Claude review accept → merged to main. Wave 4 (task 11, codex) is last.

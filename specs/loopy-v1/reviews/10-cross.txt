@@ -1,0 +1,11 @@
+**Findings**
+
+1. [src/cli.ts](/Users/sujit/projects/loopy-wt-10/src/cli.ts:341) - Medium: Snoozed proposals never return to the companion inbox. `snoozeAction` stores `status: "snoozed"` plus `snoozedUntil`, but `readCompanionState` only allows `status === "pending"`, so once snoozed, a proposal is filtered out forever even after the 7-day timestamp passes. The brief requires snoozed proposals to be filtered out only while `snoozedUntil > now`.
+
+2. [src/cli.ts](/Users/sujit/projects/loopy-wt-10/src/cli.ts:465) - Medium: `setup --companion` accepts and persists arbitrary strings. The option is specified as `<auto|manual|off>`, but Commander does not enforce that here, and line 469 casts any string into the union before `setupAction` writes it to `config.json`. This can create an invalid `LoopyConfig` and break code assuming only the three supported modes.
+hook: Stop
+hook: Stop Failed
+tokens used
+69,652
+
+
