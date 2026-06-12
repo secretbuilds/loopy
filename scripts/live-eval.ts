@@ -81,8 +81,9 @@ async function main(): Promise<void> {
     );
 
     for (const candidate of output.candidates) {
+      const cited = candidate.evidence.map((e) => e.sessionId).join(",");
       process.stdout.write(
-        `CANDIDATE ${candidate.id}: ${candidate.summary} | ${candidate.impactEstimate}\n`
+        `CANDIDATE ${candidate.id} [type=${candidate.type} conf=${candidate.confidence} evidence=${cited}]: ${candidate.summary} | ${candidate.impactEstimate}\n`
       );
     }
     for (const candidate of output.watchlist) {
