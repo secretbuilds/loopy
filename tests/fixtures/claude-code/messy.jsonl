@@ -1,0 +1,9 @@
+{not valid json
+this is not json at all
+{"type":"weird-unknown-type","foo":1,"timestamp":"2026-06-12T09:00:00.000Z"}
+{"type":"user","sessionId":"sess-messy","message":{"role":"user","content":[{"type":"text","text":"Hello "},{"type":"image","source":"x"},{"type":"text","text":"world"}]}}
+{"type":"assistant","message":{"content":[{"type":"tool_use","name":"Bash","input":{"command":"ls -la"}}]}}
+
+[]
+{"timestamp":"2026-06-12T10:00:00.000Z","content":"line with no type field"}
+{"type":"user","sessionId":"sess-messy","timestamp":"2026-06-12T10:05:00.000Z","message":{"role":"user","content":"<command-name>compact</command-name> the conversation"}}
