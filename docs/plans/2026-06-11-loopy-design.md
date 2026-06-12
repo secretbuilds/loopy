@@ -37,11 +37,14 @@ criteria, human-in-the-loop trust threshold (the user approves every install).
 | v1 tools | Claude Code + Codex | Two biggest agentic CLIs; adapter architecture keeps others additive |
 | Brain | User's own CLI entitlements (headless `claude -p`) | Zero backend, zero key onboarding, transcripts never leave the machine |
 | Surface | CLI inbox (`loopy review`) + in-tool session-start nudge | Works identically across tools, no GUI to build |
-| Lifecycle | Install-and-done (v1) | Smallest v1; health monitoring is the first v2 item — see §13 |
+| Lifecycle | Install-and-done (v1) | Smallest v1; health monitoring is the first v2 item — see §14 |
+| Character | Noodle-loop critter, terminal-only (ASCII/ANSI) | Reads as "a loop" instantly; ships inside the CLI, no native app |
+| Character habitat | Companion window auto-spawned on session start | True ambient presence without leaving the terminal — see §10 |
+| Aliveness | Honest moods + real milestones, never guilt | Every animation maps to real state; guilt mechanics are uninstall fuel |
 
 ## 3. Architecture
 
-Five components, one process boundary, all state in `~/.loopy/` as plain files.
+Six components, one process boundary, all state in `~/.loopy/` as plain files.
 
 ```
  Claude Code sessions ──┐                          ┌─> claude-code installer
@@ -82,6 +85,11 @@ Five components, one process boundary, all state in `~/.loopy/` as plain files.
    the inbox. `loopy review` shows pattern, evidence, and bundle;
    approve → adapter installs; dismiss → recorded in pattern memory so it is
    never re-proposed; snooze → resurfaces after N days.
+
+6. **Companion TUI (zero-LLM)** — `loopy companion`, a small terminal window
+   hosting Loopy-the-character and the review inbox. Auto-spawned on session
+   start by the same trigger signals the watcher already uses. Renders only
+   `~/.loopy/` state files; never calls an LLM. Full design: §10.
 
 ## 4. SessionRecord (common format)
 
@@ -209,7 +217,8 @@ one-command out.
 ```
 loopy setup        # detect tools, install daemon + optional trigger hook, initial history scan
 loopy scan         # run the pattern engine now
-loopy review       # inbox: proposals with evidence + bundle preview → approve / dismiss / snooze
+loopy review       # opens the companion TUI in inbox mode (approve / dismiss / snooze)
+loopy companion    # the Loopy window: ambient pet + inbox (§10); auto-spawned per config
 loopy list         # installed loops + where they're installed
 loopy uninstall <id>
 loopy pause|resume # stop/start the daemon
@@ -223,7 +232,57 @@ loopy status       # daemon health, last scan, token spend estimate
   the user sees real proposals within minutes of installing — the activation
   moment.
 
-## 10. Privacy & security
+## 10. Loopy — the character & companion window
+
+**The creature.** Loopy is a **noodle-loop critter**: a soft rounded loop with
+its face in the curl. Pure ASCII/ANSI, ~6 rows tall, animated at 2–4 fps. The
+body is the emotional instrument — it curls, bounces, and spins.
+
+```
+   idle            excited           celebrating        sleepy
+
+    ╭──╮            ╭──╮ ✧           ✧ ╭──╮ ✧            ╭──╮
+   ╭│◕ ◕│╮         ╭│✧ ✧│╮           ╭│✧◡✧│╮            ╭│− −│╮  z Z
+    ╰◡◡╯            ╰◡◡╯ ✧           ╰╰─◡─╯╯             ╰‿‿╯
+```
+
+**The companion window.** `loopy companion` runs a small TUI (~44×14 chars).
+Spawn triggers are the signals the architecture already has: the Claude Code
+SessionStart trigger hook, and the watcher's detection of a new Codex session.
+On trigger, Loopy opens a sized, corner-positioned window in the user's
+terminal (macOS: AppleScript against Terminal.app/iTerm2; Linux/Windows: v2).
+**Singleton** — a second session focuses the existing window, never spawns
+another. Spawn behavior is config: `companion: auto | manual | off`, chosen
+during `loopy setup`. The TUI reads only `~/.loopy/` state files: zero LLM
+calls, zero token cost.
+
+**Two modes, one window.**
+- *Ambient*: Loopy idles with live status — sessions watched, loops installed,
+  proposals waiting.
+- *Inbox*: press `r` and the window expands into the full review inbox
+  (evidence, bundle preview, approve/dismiss/snooze). `loopy review` from any
+  terminal opens this same TUI. The inbox lives where Loopy lives.
+
+**Honest moods (state map).** Every animation maps to real state:
+
+| Real state | Loopy |
+|---|---|
+| All quiet, loops healthy | sleepy, slow blink, z Z |
+| New proposals waiting | perky, occasional bounce |
+| User reviewing | attentive, follows along |
+| Loop installed | spin + confetti |
+| A loop is failing (v2) | worried ◕⌓◕ |
+
+Real milestones get celebrated (first loop installed, 10th loop, 30 days of
+clean runs). **Never guilt** — this is a product principle, not art direction:
+no droopy-because-you-ignored-it, dismissals met with grace, no streak-shaming.
+
+**Voice.** Warm encourager: lowercase, brief, celebrates the *user's* growth
+("that's a responsibility you don't carry anymore~"), teaches one
+loop-engineering micro-lesson at a time. All user-facing strings live in a
+single voice file so personality stays consistent and maintainable.
+
+## 11. Privacy & security
 
 - **Nothing leaves the machine** except the headless `claude -p` calls the
   user's own CLI already makes under their account. No Loopy backend, no
@@ -237,7 +296,7 @@ loopy status       # daemon health, last scan, token spend estimate
   and run under the user's existing tool permission model — Loopy grants
   nothing the user's tools don't already have.
 
-## 11. Token budget (user's plan)
+## 12. Token budget (user's plan)
 
 | Activity | Frequency | Est. tokens |
 |---|---|---|
@@ -249,7 +308,7 @@ loopy status       # daemon health, last scan, token spend estimate
 Configurable daily cap (default 100k); engine skips a run rather than exceed
 it, and `loopy status` reports spend.
 
-## 12. Failure modes & handling
+## 13. Failure modes & handling
 
 | Failure | Handling |
 |---|---|
@@ -263,7 +322,7 @@ it, and `loopy status` reports spend.
 
 No silent failures: every skip/retry/drop lands in `~/.loopy/log/`.
 
-## 13. v1 scope rationale & roadmap
+## 14. v1 scope rationale & roadmap
 
 **Why this is "only v1":** the single risky bet is **proposal quality** — do
 mined patterns convert into loops users actually approve and keep? Everything
@@ -285,7 +344,7 @@ Roadmap, in order:
 5. **v3 — Hosted/team tier**: shared pattern libraries, org-level loops; brings
    the backend + security story when revenue justifies it.
 
-## 14. Testing strategy
+## 15. Testing strategy
 
 - **Adapters**: golden-file tests — real (sanitized) transcript fixtures per
   tool version → expected `SessionRecord`s. New tool releases add fixtures.
@@ -298,8 +357,11 @@ Roadmap, in order:
   adversarial cases (pattern with no safe loop) must be dropped, not shipped.
 - **Installer**: end-to-end on a sandbox home dir — install, verify the loop
   actually fires (run the trigger), uninstall, assert zero residue.
+- **Companion TUI**: render-to-string unit tests for every mood in the §10
+  state map; singleton spawn test (two triggers → one window); inbox
+  keybinding flows; voice-file review for guilt-free tone.
 
-## 15. Open questions (not blocking build start)
+## 16. Open questions (not blocking build start)
 
 - Distribution: Homebrew tap vs npm vs standalone binary (affects daemon install UX).
 - Similarity matching in the digester: embed-and-cluster locally vs let the
