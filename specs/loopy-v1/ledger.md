@@ -43,6 +43,7 @@
 - 2026-06-12: Parallelism constraint — max ONE codex task in flight (resume --last is global); kiro tasks may run parallel in separate worktrees (--resume is directory-scoped). Task 04 rerouted codex→kiro.
 
 ## Spec drift discovered
+- 2026-06-12 (post-convergence, 26dc1dd): task 09 brief's inbox keybar text ("[a]pprove [d]ismiss [s]nooze [→]next [esc]back", 46 chars) cannot fit the brief's own 44-char box — it rendered clipped at "[esc". Fixed by dropping the [→]next hint (keys still bound). Brief's two constraints were mutually unsatisfiable; box width wins.
 - 2026-06-12 (task 09): brief specified critter-left + right-column text layout for ambient mode; implementation stacks vertically (critter, then text lines full-width). Verdict: drift ACCEPTED as improvement — at 44 chars wide the vertical stack is more readable. Brief not retro-edited; design doc §10 unaffected (it never specified internal layout).
 
 ## Wave log
