@@ -1,0 +1,26 @@
+{
+  "name": "loopy",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "loopy": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.3"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "tsx src/index.ts"
+  }
+}
