@@ -26,10 +26,10 @@
 | 03 | codex adapter | codex | accepted (merged 0d9e84f) | 1/2 | NO_DEFECTS (kiro) | accept |
 | 04 | digester + redaction | kiro | accepted (merged db15dfd) | 1/2 | 2 HIGH found → fixed | accept after fix + independent spot-checks |
 | 05 | engine + eval harness | codex | accepted (merged 723a22e) | 1/2 | NO_DEFECTS + budget gap | accept after PULL-BACK (codex fix cycle failed; Claude moved spend reservation before first call) |
-| 06 | generator | kiro | fix cycle (wt-06) | 1/2 | 1 MED: extra ## headings pass validation | — |
-| 07 | installers | kiro | delegated (wt-07) | 1/2 | — | — |
-| 08 | watcher + spawn | codex | delegated (wt-08) | 1/2 | — | — |
-| 09 | companion TUI + voice | kiro | planned | 0/2 | — | — |
+| 06 | generator | kiro | accepted (merged 441df62) | 1/2 | 1 MED → fixed | accept after fix |
+| 07 | installers | kiro | accepted (merged 94bec15) | 1/2 | 1 HIGH + 3 MED → all fixed | accept after fix; 16 tests incl. byte-clean uninstall + shared-entry precision |
+| 08 | watcher + spawn | codex | accepted (merged a062838) | 1/2 | NO_DEFECTS | accept; singleton logic verified |
+| 09 | companion TUI + voice | kiro | delegated (wt-09) | 1/2 | — | — |
 | 10 | CLI wiring | kiro | planned | 0/2 | — | — |
 | 11 | e2e + polish | codex | planned | 0/2 | — | — |
 

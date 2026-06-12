@@ -1,0 +1,8 @@
+- Type conformance: returned [38;5;10mSessionRecord[0m/[38;5;10mSessionEvent[0m objects only use declared fields; optional [38;5;10mrepo[0m/[38;5;10mbranch[0m omitted legitimately. ✓[0m[0m
+- File scope: only the four allowed files; [38;5;10msrc/types.ts[0m unmodified. ✓[0m[0m
+[0m[0m
+NO_DEFECTS[0m[0m
+[38;5;8m
+ ▸ Credits: 0.42 • Time: 13s
+
+[0m[1G[0m[0m[?25h

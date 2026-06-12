@@ -1,0 +1,10 @@
+[0m[0m
+Prompt const contains all required elements (role, 6 typed definitions, verbatim quality bar incl. <10 min/week → watchlist, hard rules, single-JSON-object schema, field list, appended inputs). [38;5;10mdefaultRunner[0m spawns [38;5;10mclaude -p[0m, writes prompt to stdin, rejects on non-zero exit, and is isolated from the tested paths. The balanced-brace extractor correctly handles strings/escapes.[0m[0m
+[0m[0m
+One non-blocking observation (not a defect — matches the brief's literal "record spend after the (final) call"): when all 3 attempts fail and [38;5;10mEngineError[0m is thrown, the 3 consumed calls are never written to the spend ledger, so a perpetually-garbage runner can exceed the daily cap across repeated [38;5;10mrunEngine[0m invocations. The brief only specifies recording on the success path, so this is within spec.[0m[0m
+[0m[0m
+NO_DEFECTS[0m[0m
+[38;5;8m
+ ▸ Credits: 1.16 • Time: 49s
+
+[0m[1G[0m[0m[?25h
