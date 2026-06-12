@@ -1,0 +1,18 @@
+One concrete defect:
+
+scripts/live-eval.ts — decoy failure check includes the watchlist (low severity)
+
+ts
+const surfaced = [...output.candidates, ...output.watchlist];
+const decoyProposed = surfaced.some((candidate) =>
+  candidate.evidence.some((evidence) => evidence.sessionId === decoySessionId)
+);
+
+
+The brief defines the decoy failure condition as the decoy becoming a candidate ("must NOT become a candidate"; exit 0 only if "decoy not proposed"). In this system the engine deliberately separates candidates from watchlist (sub-threshold items). Counting a watchlist appearance as FALSELY PROPOSED is stricter than the spec and can produce a spurious exit 1 if the real claude parks the decoy in the watchlist rather than dropping it entirely. Scoping decoyProposed to output.candidates would match the brief. This only affects the manual live run (the automated skip-path acceptance is unaffected), hence low severity.
+
+No other defects found — the e2e test and README are correct.
+
+ ▸ Credits: 4.57 • Time: 2m 48s
+
+[?25h
