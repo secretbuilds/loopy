@@ -1,0 +1,7 @@
+**Findings**
+
+- `src/companion/tui.ts:168` / `src/companion/tui.ts:170` - **High**: `d` and `s` in inbox mode do not advance `inboxIndex`. The brief’s reducer checks explicitly require `a/d/s flash+advance`; only `a` advances here. This will leave dismissed or snoozed proposals selected instead of moving to the next proposal.
+
+- `src/companion/tui.ts:19` - **Medium**: `CompanionState` adds a required `tick: number` field that is not in the specified interface. The task gives the exact public state shape; making `tick` required means callers/tests written against the brief’s interface cannot construct a valid `CompanionState` without an extra undocumented field. Track tick count outside the public state, make it optional, or derive rotation another specified way.
+
+No other concrete defects found against the supplied checks.
