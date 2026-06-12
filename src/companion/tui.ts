@@ -153,7 +153,8 @@ function renderInbox(s: CompanionState): string[] {
   const impact = `impact: ${proposal.candidate.impactEstimate}`;
   const evidence = `evidence: ${proposal.candidate.occurrences} sessions`;
   const flash = s.flash ?? "";
-  const bar = "[a]pprove [d]ismiss [s]nooze [→]next [esc]back";
+  // → and n still advance; hint dropped so the bar fits TEXT_INNER (41 chars)
+  const bar = "[a]pprove [d]ismiss [s]nooze [esc]back";
 
   return [
     "",
