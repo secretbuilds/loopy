@@ -1,0 +1,14 @@
+{"timestamp":"2026-06-12T14:00:00.000Z","type":"session_meta","payload":{"id":"codex-session-1","timestamp":"2026-06-12T14:00:00.000Z","cwd":"/Users/sujit/projects/loopy","originator":"codex_cli","cli_version":"1.0.0","source":"rollout"}}
+{"timestamp":"2026-06-12T14:00:00.500Z","type":"response_item","payload":{"type":"message","role":"developer","content":[{"type":"input_text","text":"developer-only instruction"}]}}
+{"timestamp":"2026-06-12T14:00:01.000Z","type":"response_item","payload":{"type":"message","role":"system","content":[{"type":"input_text","text":"system instruction"}]}}
+{"timestamp":"2026-06-12T14:00:01.500Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"assistant response"}]}}
+{"timestamp":"2026-06-12T14:00:02.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"Build the Codex adapter."}]}}
+{"timestamp":"2026-06-12T14:00:03.000Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"cmd\":\"rg --files\"}"}}
+{"timestamp":"2026-06-12T14:00:04.000Z","type":"response_item","payload":{"type":"reasoning","summary":"thinking"}}
+{"timestamp":"2026-06-12T14:00:05.000Z","type":"response_item","payload":{"type":"function_call_output","call_id":"call-1","output":"src/index.ts"}}
+{"timestamp":"2026-06-12T14:00:06.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<environment_context>\n  <cwd>/Users/sujit/projects/loopy</cwd>\n</environment_context>"}]}}
+{"timestamp":"2026-06-12T14:00:07.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"<permissions instructions>\nFilesystem sandboxing applies.\n</permissions instructions>"}]}}
+{"timestamp":"2026-06-12T14:00:08.000Z","type":"response_item","payload":{"type":"message","role":"user","content":[{"type":"input_text","text":"Run the focused tests."}]}}
+{"timestamp":"2026-06-12T14:00:09.000Z","type":"response_item","payload":{"type":"function_call","name":"shell","arguments":"{\"cmd\":\"npm run typecheck && npx vitest run tests/adapters/codex.test.ts\"}"}}
+{"timestamp":"2026-06-12T14:00:10.000Z","type":"event_msg","payload":{"type":"error","message":"sandbox denied reading a missing rollout file"}}
+{"timestamp":"2026-06-12T14:00:11.000Z","type":"response_item","payload":{"type":"reasoning","summary":"done"}}
