@@ -24,11 +24,11 @@
 | 01 | scaffold + types + state | codex | accepted | 1/2 | NO_DEFECTS | accept |
 | 02 | claude-code adapter | kiro | accepted (merged 0d9e84f) | 1/2 | NO_DEFECTS (codex) | accept; low-sev note: empty user texts still emit events — polish in 11 |
 | 03 | codex adapter | codex | accepted (merged 0d9e84f) | 1/2 | NO_DEFECTS (kiro) | accept |
-| 04 | digester + redaction | kiro | delegated (wt-04) | 1/2 | — | — |
-| 05 | engine + eval harness | codex | delegated (wt-05) | 1/2 | — | — |
-| 06 | generator | kiro | delegated (wt-06) | 1/2 | — | — |
-| 07 | installers | kiro | planned | 0/2 | — | — |
-| 08 | watcher + spawn | codex | planned | 0/2 | — | — |
+| 04 | digester + redaction | kiro | accepted (merged db15dfd) | 1/2 | 2 HIGH found → fixed | accept after fix + independent spot-checks |
+| 05 | engine + eval harness | codex | accepted (merged 723a22e) | 1/2 | NO_DEFECTS + budget gap | accept after PULL-BACK (codex fix cycle failed; Claude moved spend reservation before first call) |
+| 06 | generator | kiro | fix cycle (wt-06) | 1/2 | 1 MED: extra ## headings pass validation | — |
+| 07 | installers | kiro | delegated (wt-07) | 1/2 | — | — |
+| 08 | watcher + spawn | codex | delegated (wt-08) | 1/2 | — | — |
 | 09 | companion TUI + voice | kiro | planned | 0/2 | — | — |
 | 10 | CLI wiring | kiro | planned | 0/2 | — | — |
 | 11 | e2e + polish | codex | planned | 0/2 | — | — |
