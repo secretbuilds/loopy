@@ -101,6 +101,17 @@ export function shellQuote(value: string): string {
   return `'${value.replace(/'/g, "'\\''")}'`;
 }
 
+const LOOP_ID_RE = /^[a-z0-9][a-z0-9-]{0,63}$/;
+
+/** Throw if loopId does not match the allowed charset (a-z0-9 and hyphens). */
+export function validateLoopId(loopId: string): void {
+  if (!LOOP_ID_RE.test(loopId)) {
+    throw new Error(
+      `Invalid loopId "${loopId}": must match /^[a-z0-9][a-z0-9-]{0,63}$/`
+    );
+  }
+}
+
 /** Build a minimal valid launchd plist XML document. */
 export function plistFor(
   label: string,
@@ -259,7 +270,7 @@ function removeLoopHooks(settingsPath: string, loopId: string): void {
             return entry;
           }
           const keptInner = inner.filter(
-            (h) => !(typeof h?.command === "string" && h.command.includes(marker))
+            (h) => !(typeof h?.command === "string" && h.command.endsWith(marker))
           );
           if (keptInner.length === inner.length) {
             return entry; // nothing of ours here — leave untouched
