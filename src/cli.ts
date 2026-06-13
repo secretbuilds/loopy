@@ -39,8 +39,8 @@ import {
 } from "./installers/shared.js";
 import { installClaudeCodeLoop } from "./installers/claude-code.js";
 import { installCodexLoop } from "./installers/codex.js";
-import { runCompanion, type CompanionShellOpts } from "./companion/tui.js";
 import { VOICE } from "./companion/voice.js";
+import { runDashboard } from "./dashboard/shell.js";
 
 // ── Dependency injection ─────────────────────────────────────────────────────
 // Every side effect that is awkward to control in tests (process spawning, the
@@ -86,7 +86,7 @@ function launchAgentsDir(deps: CliDeps): string {
   return join(deps.homedir(), "Library", "LaunchAgents");
 }
 
-function daemonPlistPath(deps: CliDeps): string {
+export function daemonPlistPath(deps: CliDeps): string {
   return join(launchAgentsDir(deps), "com.loopy.daemon.plist");
 }
 
@@ -102,7 +102,7 @@ function bundlesDir(): string {
   return join(loopyHome(), "bundles");
 }
 
-function bundleDirFor(proposal: Proposal | undefined, id: string): string {
+export function bundleDirFor(proposal: Proposal | undefined, id: string): string {
   return proposal?.bundleDir ?? join(bundlesDir(), id);
 }
 
@@ -399,22 +399,12 @@ export function readCompanionState(deps: CliDeps): { proposals: Proposal[]; sess
   return { proposals, sessions };
 }
 
-function companionOpts(deps: CliDeps, startMode: "ambient" | "inbox"): CompanionShellOpts {
-  return {
-    onApprove: (p) => approveAction(deps, p),
-    onDismiss: (p) => dismissAction(deps, p),
-    onSnooze: (p) => snoozeAction(deps, p),
-    readState: () => readCompanionState(deps),
-    startMode
-  };
-}
-
 export async function reviewAction(deps: CliDeps): Promise<void> {
-  await runCompanion(companionOpts(deps, "inbox"));
+  await runDashboard(deps, "inbox");
 }
 
 export async function companionAction(deps: CliDeps): Promise<void> {
-  await runCompanion(companionOpts(deps, "ambient"));
+  await runDashboard(deps, "inbox");
 }
 
 // ── list ──────────────────────────────────────────────────────────────────--
@@ -495,6 +485,8 @@ export async function statusAction(deps: CliDeps): Promise<void> {
 export function buildProgram(deps: CliDeps): Command {
   const program = new Command();
   program.name("loopy").description("loopy — your coding-agent loop companion").version("0.1.0");
+
+  program.action(() => runDashboard(deps, "inbox"));
 
   program
     .command("setup")
