@@ -80,20 +80,25 @@ The engine uses your own Claude API credits. No separate service, no subscriptio
 ## Install
 
 ```bash
-npm i -g @secretbuilds/loopy
+curl -fsSL https://raw.githubusercontent.com/secretbuilds/loopy/main/install.sh | bash
+```
+
+Then finish setup:
+
+```bash
 loopy setup
 ```
 
-`loopy setup` creates local state at `~/.loopy/`, adds a session-start trigger to Claude Code, and installs the background watcher daemon.
+The installer clones the repo to `~/.loopy-app`, builds it, and links the `loopy` binary to your PATH. Re-running the same command updates to the latest version.
 
-Options:
+Options for setup:
 
 ```bash
 loopy setup --companion manual   # no automatic nudges
 loopy setup --no-daemon          # configure without the background daemon
 ```
 
-**Requirements:** Node ≥ 20, Claude Code CLI (`claude`) in your PATH, macOS (launchd daemon).
+**Requirements:** Node ≥ 20, git, Claude Code CLI (`claude`) in your PATH, macOS.
 
 ---
 
@@ -196,10 +201,10 @@ loopy may suggest automation, but it never shames you for ignoring, snoozing, or
 
 ---
 
-## Development
+## Development (contributing)
 
 ```bash
-git clone <repo>
+git clone https://github.com/secretbuilds/loopy.git
 cd loopy
 npm install
 npm run build
