@@ -1,4 +1,4 @@
-# loopy
+# meet loopy
 
 **A terminal meta-agent that watches how you work, finds the patterns, and writes the loops so you don't have to.**
 
