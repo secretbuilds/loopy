@@ -1,7 +1,13 @@
 {
-  "name": "loopy",
+  "name": "@secretbuilds/loopy",
   "version": "0.1.0",
   "type": "module",
+  "description": "Local meta-agent that watches Claude Code sessions and proposes automation loops",
+  "files": [
+    "dist/",
+    "README.md",
+    "docs/dashboard.png"
+  ],
   "bin": {
     "loopy": "dist/index.js"
   },

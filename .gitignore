@@ -3,3 +3,6 @@ dist
 *.log
 .DS_Store
 .worktrees/
+.claude/
+docs/loop-engineering-context.md
+docs/plans/

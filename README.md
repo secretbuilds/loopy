@@ -80,7 +80,7 @@ The engine uses your own Claude API credits. No separate service, no subscriptio
 ## Install
 
 ```bash
-npm i -g loopy
+npm i -g @secretbuilds/loopy
 loopy setup
 ```
 
