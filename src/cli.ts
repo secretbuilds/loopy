@@ -26,6 +26,7 @@ import {
   writeJsonAtomic
 } from "./state.js";
 import { defaultRunner, runEngine, type LlmRunner } from "./engine.js";
+import { appendEvent } from "./events.js";
 import { generateBundle } from "./generator.js";
 import { startWatcher, defaultContext } from "./watcher.js";
 import {
@@ -278,6 +279,7 @@ export async function scanAction(deps: CliDeps): Promise<void> {
   });
 
   if (output.skipped) {
+    appendEvent("scan", "scan skipped — daily token budget reached", deps.now());
     deps.out("token budget reached — skipped");
     return;
   }
@@ -293,6 +295,8 @@ export async function scanAction(deps: CliDeps): Promise<void> {
     saveProposal({ candidate, status: "pending", createdAt: deps.now() });
     saved += 1;
   }
+
+  appendEvent("scan", `scan complete: ${saved} new proposal(s)`, deps.now());
 
   if (output.memoryUpdates.length > 0) {
     const existing = existsSync(memPath) ? readFileSync(memPath, "utf8") : "";
@@ -317,6 +321,11 @@ export async function approveAction(deps: CliDeps, proposal: Proposal): Promise<
   });
 
   if (!result.ok) {
+    appendEvent(
+      "error",
+      `bundle generation failed for ${candidate.id}: ${result.reason}`,
+      deps.now()
+    );
     deps.out(result.reason);
     return; // leave the proposal pending
   }
@@ -331,11 +340,13 @@ export async function approveAction(deps: CliDeps, proposal: Proposal): Promise<
   addToRegistry("installed", candidate.id);
   const stored = getProposal(candidate.id) ?? proposal;
   saveProposal({ ...stored, status: "approved", bundleDir: result.bundleDir });
+  appendEvent("approve", `approved + installed "${candidate.id}"`, deps.now());
 }
 
 export async function dismissAction(deps: CliDeps, proposal: Proposal): Promise<void> {
   addToRegistry("dismissed", proposal.candidate.id);
   setProposalStatus(proposal.candidate.id, "dismissed");
+  appendEvent("dismiss", `dismissed "${proposal.candidate.id}"`, deps.now());
 }
 
 const SNOOZE_MS = 7 * 24 * 60 * 60 * 1000;
@@ -345,6 +356,7 @@ export async function snoozeAction(deps: CliDeps, proposal: Proposal): Promise<v
   const snoozedUntil = new Date(nowMs(deps) + SNOOZE_MS).toISOString();
   const stored = getProposal(id) ?? proposal;
   saveProposal({ ...stored, status: "snoozed", snoozedUntil });
+  appendEvent("snooze", `snoozed "${id}" for 7 days`, deps.now());
 }
 
 export function readCompanionState(deps: CliDeps): { proposals: Proposal[]; sessions: number } {
@@ -433,17 +445,24 @@ export async function uninstallAction(deps: CliDeps, opts: { id: string }): Prom
   writeJsonAtomic(registryFile, installed.filter((entry) => entry !== id));
 
   setProposalStatus(id, "dismissed");
+  appendEvent("uninstall", `uninstalled "${id}"`, deps.now());
   deps.out(`✓ uninstalled ${id}`);
 }
 
 // ── pause / resume ─────────────────────────────────────────────────────────-
 export async function pauseAction(deps: CliDeps): Promise<void> {
   const { code } = await deps.exec("launchctl", ["unload", daemonPlistPath(deps)]);
+  if (code === 0) {
+    appendEvent("pause", "daemon paused", deps.now());
+  }
   deps.out(code === 0 ? "✓ daemon paused" : "daemon not installed?");
 }
 
 export async function resumeAction(deps: CliDeps): Promise<void> {
   const { code } = await deps.exec("launchctl", ["load", daemonPlistPath(deps)]);
+  if (code === 0) {
+    appendEvent("resume", "daemon resumed", deps.now());
+  }
   deps.out(code === 0 ? "✓ daemon resumed" : "daemon not installed?");
 }
 
