@@ -15,14 +15,15 @@ loopy setup
 
 | Command | What it does |
 | --- | --- |
+| `loopy` | Open the full-terminal dashboard (inbox, loops, activity). |
 | `loopy setup` | Initialize config, trigger hook, and daemon. |
 | `loopy setup --companion manual` | Keep the companion out of automatic nudges. |
 | `loopy setup --no-daemon` | Configure loopy without installing the background daemon. |
 | `loopy mark` | Drop a watcher marker; mainly used by the trigger hook. |
 | `loopy daemon` | Run the background watcher in the foreground. |
 | `loopy scan` | Analyze local digests and create pending proposals. |
-| `loopy review` | Open the review inbox for pending proposals. |
-| `loopy companion` | Run the ambient terminal companion. |
+| `loopy review` | Open the dashboard focused on the proposal inbox. |
+| `loopy companion` | Open the dashboard (alias for the bare command). |
 | `loopy list` | List installed loops. |
 | `loopy uninstall <id>` | Remove an installed loop by id. |
 | `loopy pause` | Pause the background daemon. |
@@ -65,13 +66,29 @@ The engine sends only compact redacted digests to your own `claude -p` process. 
 
 Uninstall removes the loop files and integrations recorded in the loop manifest. To remove all loopy state, delete the local loopy home directory after uninstalling loops.
 
-## Loopy
+## Dashboard
 
 ```text
    ╭──╮
   ╭│◕ ◕│╮
    ╰◡◡╯
 ```
+
+Running `loopy` with no arguments (or `loopy review` / `loopy companion`) opens a full-terminal dashboard with three panels:
+
+- **inbox**: pending loop proposals, with the selected one's summary, impact, evidence, and confidence.
+- **loops**: the loops you have installed, with their trigger kind and target tool.
+- **activity**: a scrolling log of recent loopy events.
+
+The header shows live status: sessions watched · daemon state · today's spend against the cap.
+
+Keys:
+
+- `tab` switches the focused panel; `↑`/`↓` move within it.
+- `a` approve, `d` dismiss, `z` snooze a proposal. Approve and dismiss ask for a `[y]es`/`[n]o` confirmation first.
+- `s` scan for new proposals, `p` pause/resume the daemon, `q` quit.
+
+The dashboard resizes with your terminal. Below 60×16 it shows a "bigger window" hint instead.
 
 The never-guilt principle: loopy may suggest useful automation, but it should never shame you for ignoring, snoozing, or dismissing a proposal. A quiet tool is better than a nagging one.
 
