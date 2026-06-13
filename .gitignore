@@ -6,3 +6,5 @@ dist
 .claude/
 docs/loop-engineering-context.md
 docs/plans/
+specs/
+scripts/
