@@ -17,6 +17,7 @@ import {
 } from "./adapters/claude-code.js";
 import { listCodexSessions, parseCodexSession } from "./adapters/codex.js";
 import { digestSession } from "./digester.js";
+import { appendEvent } from "./events.js";
 import { loadConfig, loopyHome, readJson, writeJsonAtomic } from "./state.js";
 
 export interface WatchContext {
@@ -81,8 +82,20 @@ export async function tick(ctx: WatchContext): Promise<TickResult> {
 
   writeJsonAtomic(statePath, state);
 
+  if (digested.length > 0) {
+    appendEvent(
+      "digest",
+      `digested ${digested.length} session(s): ${digested.join(", ")}`,
+      ctx.now()
+    );
+  }
+
   const companionSpawned =
     markersConsumed > 0 || digested.length > 0 ? maybeSpawnCompanion(ctx) : false;
+
+  if (companionSpawned) {
+    appendEvent("spawn", "opened companion window", ctx.now());
+  }
 
   return { digested, markersConsumed, companionSpawned };
 }
