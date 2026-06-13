@@ -8,11 +8,13 @@ export function renderDashboard(s: DashboardState, cols: number, rows: number): 
   if (cols < MIN_COLS || rows < MIN_ROWS) return renderTooSmall(cols, rows);
 
   const widths = columnWidths(cols);
-  const bodyRows = Math.max(0, rows - 11);
+  const bodyRows = Math.max(0, rows - 12);
+  const critter = critterArt(deriveMood(s), s.moodFrame);
   const lines: string[] = [
     topBorder(cols),
-    boxedLine(`  ${critterFace(deriveMood(s), s.moodFrame)}  ${statusText(s)}`, cols),
-    boxedLine(headerMessage(s), cols),
+    boxedLine(` ${critter[0]}  ${statusText(s)}`, cols),
+    boxedLine(` ${critter[1]}  ${headerMessage(s)}`, cols),
+    boxedLine(` ${critter[2]}`, cols),
     panelTitleLine(s, widths, cols),
     ...bodyLines(s, widths, bodyRows),
     activityTitleLine(s.focus, cols),
@@ -156,18 +158,20 @@ function footerText(s: DashboardState): string {
   }
 }
 
-function critterFace(mood: Mood, moodFrame: number): string {
+function critterArt(mood: Mood, frame: number): [string, string, string] {
   switch (mood) {
     case "idle":
-      return moodFrame % 4 === 3 ? "(− −)" : "(◕ ◕)";
+      return frame % 4 === 3
+        ? ["  ╭──╮ ", " ╭│− −│╮", "  ╰◡◡╯  "]
+        : ["  ╭──╮ ", " ╭│◕ ◕│╮", "  ╰◡◡╯  "];
     case "sleepy":
-      return "(− −)ᶻ";
+      return ["  ╭──╮ ", " ╭│− −│╮ z", "  ╰‿‿╯  "];
     case "perky":
-      return "(✧ ✧)";
+      return ["  ╭──╮✧", " ╭│◕ ◕│╮", "  ╰◡◡╯  "];
     case "attentive":
-      return "(◕ ◕)?";
+      return ["  ╭──╮ ", " ╭│◕ ◕│╮", "  ╰──╯  "];
     case "celebrate":
-      return "✧(◕◡◕)✧";
+      return ["✧ ╭──╮✧", " ╭│✧◡✧│╮", "  ╰─◡─╯ "];
   }
 }
 
