@@ -9,7 +9,7 @@
 - [x] AC4 confirm gates destructive actions (task 02, verified 03)
 - [x] AC5 CLI: bare loopy → dashboard, review focus, subcommands intact (task 03)
 - [x] AC6 shell: resize, clean exit, tick refresh (task 03)
-- [ ] AC7 full suite green + scripted real-state renders (task 04)
+- [x] AC7 full suite green + scripted real-state renders (task 04)
 
 ## Tasks
 | ID | Name | Vendor | Status | Attempts | Cross-review | Claude review |
@@ -17,7 +17,7 @@
 | 01 | event log infra + writer wiring | kiro | accepted (merged) | 1/2 | NO_DEFECTS (Claude — codex review stalled) | accept; wiring verbatim, 96 tests |
 | 02 | dashboard renderer + reducer (pure) | codex | accepted (merged) | 1/2 | NO_DEFECTS (kiro) | accept; pure, geometry exact, 13 tests |
 | 03 | shell + CLI wiring (replaces v1 TUI) | claude-subagent | accepted (merged) | 1/2 | 1 HIGH → fixed | accept after fix; 94 tests, build + --help green, v1 TUI removed |
-| 04 | integration verify + polish | claude-subagent | planned | 0/2 | — | — |
+| 04 | integration verify + polish | claude-subagent | accepted (merged) | 1/2 | skipped (fast path) | accept; 99 tests, typecheck clean, smoke geometry correct |
 
 ## Decisions
 - 2026-06-12: Raw ANSI continues (no ink/blessed) — keeps zero-dep constraint,
