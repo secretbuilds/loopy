@@ -3,6 +3,7 @@
 **A terminal meta-agent that watches how you work, finds the patterns, and writes the loops so you don't have to.**
 
 ![loopy dashboard](docs/dashboard.png)
+![loopy character set](docs/loopy-characters.png)
 
 ---
 
