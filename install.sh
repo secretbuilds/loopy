@@ -76,10 +76,23 @@ npm link --prefix "$INSTALL_DIR" "$INSTALL_DIR" --silent 2>/dev/null || \
   npm link --prefix "$INSTALL_DIR" --silent
 ok "loopy linked to $(command -v loopy 2>/dev/null || echo 'PATH — open a new shell if not found')"
 
+# ── fable slash command ───────────────────────────────────────────────────────
+
+header "installing /fable command"
+
+mkdir -p "$HOME/.loopy/prompts"
+cp "$INSTALL_DIR/CLAUDE-FABLE-5.md" "$HOME/.loopy/prompts/fable.md"
+ok "fable prompt → ~/.loopy/prompts/fable.md"
+
+mkdir -p "$HOME/.claude/commands"
+cp "$INSTALL_DIR/commands/fable.md" "$HOME/.claude/commands/fable.md"
+ok "/fable command → ~/.claude/commands/fable.md"
+
 # ── done ──────────────────────────────────────────────────────────────────────
 
 header "done"
 echo ""
 echo -e "  Run ${BOLD}loopy setup${RESET} to finish configuration."
 echo -e "  Run ${BOLD}loopy${RESET} to open the dashboard."
+echo -e "  Use ${BOLD}/fable <prompt>${RESET} in any Claude Code session to route through Fable 5."
 echo ""
