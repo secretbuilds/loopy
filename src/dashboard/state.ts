@@ -1,6 +1,6 @@
 import type { Proposal } from "../types.js";
 
-export type Mood = "sleepy" | "idle" | "perky" | "attentive" | "celebrate";
+export type Mood = "sleepy" | "idle" | "perky" | "attentive" | "celebrate" | "working";
 export type Focus = "inbox" | "loops" | "activity";
 
 export interface EventRow { t: string; kind: string; msg: string; }
@@ -47,6 +47,7 @@ export type Effect =
 
 export function deriveMood(s: DashboardState): Mood {
   if (s.flash?.startsWith("🌱")) return "celebrate";
+  if (s.busy) return "working";
   if (s.confirm) return "attentive";
   if (s.data.proposals.length > 0) return "perky";
   if (s.data.sessions === 0) return "sleepy";

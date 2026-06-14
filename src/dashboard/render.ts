@@ -160,18 +160,37 @@ function footerText(s: DashboardState): string {
 
 function critterArt(mood: Mood, frame: number): [string, string, string] {
   switch (mood) {
-    case "idle":
-      return frame % 4 === 3
-        ? ["  ╭──╮ ", " ╭│− −│╮", "  ╰◡◡╯  "]
-        : ["  ╭──╮ ", " ╭│◕ ◕│╮", "  ╰◡◡╯  "];
-    case "sleepy":
-      return ["  ╭──╮ ", " ╭│− −│╮ z", "  ╰‿‿╯  "];
-    case "perky":
-      return ["  ╭──╮✧", " ╭│◕ ◕│╮", "  ╰◡◡╯  "];
+    case "idle": {
+      // 16-frame cycle: normal → glance right → blink → normal
+      const cycle = frame % 16;
+      const eyes = cycle === 15 ? "─ ω ─"   // blink
+                 : cycle >= 12  ? "◕ ω ·"   // sidelong glance
+                 : "◕ ω ◕";                  // normal
+      return [" ∧  ∧   ", `(${eyes}) `, " ╰─╯╰─╯ "];
+    }
+    case "sleepy": {
+      // z drifts up slowly on the paws line
+      const zs = [" ╰─╯╰─╯ ", " ╰─╯╰─╯z", " ╰─╯╰─╯ ", " ╰─╯╰─╯Z"][Math.floor(frame / 2) % 4];
+      return [" ∧  ∧   ", "(─ . ─) ", zs];
+    }
+    case "perky": {
+      // alternating ✦/✧ sparkles, excited wiggle on paws
+      const star = frame % 2 === 0 ? "✦" : "✧";
+      const paws = frame % 2 === 0 ? " ╰─╯╰─╯ " : "  ╰─╯╰─╯";
+      return [`${star}∧  ∧${star}  `, "(◕ ▿ ◕) ", paws];
+    }
     case "attentive":
-      return ["  ╭──╮ ", " ╭│◕ ◕│╮", "  ╰──╯  "];
-    case "celebrate":
-      return ["✧ ╭──╮✧", " ╭│✧◡✧│╮", "  ╰─◡─╯ "];
+      return [" ∧  ∧   ", "(◉ _ ◉) ", " ╰─╯╰─╯ "];
+    case "celebrate": {
+      // alternate between both-arms-up poses
+      const arms = frame % 2 === 0 ? " \\(^)/  " : " /(^)\\  ";
+      return ["✦ ∧  ∧ ✦", "(◕ ▿ ◕) ", arms];
+    }
+    case "working": {
+      // spinner eyes while doing something
+      const sp = (["◐", "◓", "◑", "◒"] as const)[frame % 4];
+      return [" ∧  ∧   ", `(${sp} . ${sp}) `, " ╰─╯╰─╯ "];
+    }
   }
 }
 
