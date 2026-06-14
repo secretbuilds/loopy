@@ -157,6 +157,26 @@ The dashboard resizes with your terminal. It needs at least 60×16 — below tha
 
 ---
 
+## /fable — Claude Fable 5 slash command
+
+The installer also drops a `/fable` slash command into `~/.claude/commands/` so it's available in **any Claude Code session**, globally.
+
+```
+/fable <your prompt>
+```
+
+This routes your prompt through the full **Claude Fable 5** system prompt and model, inline in your current session. The response comes back as if you'd switched to Fable 5 for that one message — without leaving your session or changing your model.
+
+```
+/fable make this component prettier
+/fable rewrite this in a more conversational tone
+/fable explain this to a non-technical stakeholder
+```
+
+Under the hood it spawns `claude -p --model claude-fable-5 --system-prompt-file ~/.loopy/prompts/fable.md` as a subprocess and returns the output inline. The Fable 5 system prompt is stored at `~/.loopy/prompts/fable.md` (installed automatically — no setup needed beyond running the installer).
+
+---
+
 ## What a loop looks like
 
 An approved proposal becomes a **bundle** at `~/.loopy/loops/<id>/`:
