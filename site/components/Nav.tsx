@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { nav, REPO_URL, GITHUB_STARS_FALLBACK } from "@/lib/content";
+import { nav, REPO_URL, SUPPORT_URL, GITHUB_STARS_FALLBACK } from "@/lib/content";
 
 export default function Nav() {
   // Becomes true once the user scrolls past the hero's top edge, at which
@@ -75,8 +75,16 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Right: GitHub star pill + Install button */}
+        {/* Right: support + GitHub star pill + Install button */}
         <div className="flex items-center gap-2">
+          <a
+            href={SUPPORT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-amber transition-colors hover:text-amber-bright"
+          >
+            support
+          </a>
           <a
             href={REPO_URL}
             target="_blank"
