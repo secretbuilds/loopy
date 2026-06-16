@@ -1,9 +1,14 @@
-# meet loopy
+<p align="center">
+  <img src="docs/loopy-header.svg" alt="loopy" width="100%">
+</p>
 
-**A terminal meta-agent that watches how you work, finds the patterns, and writes the loops so you don't have to.**
+<p align="center">
+  <strong>A terminal meta-agent that watches how you work, finds the patterns, and writes the loops so you don't have to.</strong>
+</p>
 
-![loopy dashboard](docs/dashboard.png)
-![loopy character set](docs/loopy-characters.png)
+<p align="center">
+  <a href="https://loopyagent.com"><strong>loopyagent.com</strong></a>
+</p>
 
 ---
 

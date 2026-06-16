@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0c0c0d;
+  --bg-raised: #141414;
+  --bg-inset: #0a0a0a;
+  --border: #26241f;
+  --border-bright: #3a362d;
+  --amber: #d6a35c;
+  --amber-bright: #e8b96f;
+  --green: #8fae7e;
+  --blue: #7d9cc0;
+  --text: #c9c5bd;
+  --text-muted: #6f6b63;
+  --text-dim: #4a4842;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-inset: var(--bg-inset);
+  --color-border: var(--border);
+  --color-border-bright: var(--border-bright);
+  --color-amber: var(--amber);
+  --color-amber-bright: var(--amber-bright);
+  --color-green: var(--green);
+  --color-blue: var(--blue);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-dim: var(--text-dim);
+
+  --font-serif: var(--font-instrument-serif);
+  --font-mono: var(--font-ibm-plex-mono);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* faint amber glow anchored top-center for warmth, CSS-only */
+  background-image: radial-gradient(
+    1200px 600px at 50% -10%,
+    rgba(214, 163, 92, 0.05),
+    transparent 70%
+  );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset fixed-nav (height 3.5rem) so in-page anchors land below it */
+:target {
+  scroll-margin-top: 5rem;
+}
+
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Guard against accidental horizontal scroll on small screens */
+html,
+body {
+  overflow-x: hidden;
+}

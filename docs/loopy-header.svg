@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 340" width="1100" height="340" role="img" aria-label="loopy">
+  <defs>
+    <radialGradient id="glow" cx="32%" cy="22%" r="60%">
+      <stop offset="0%" stop-color="#d6a35c" stop-opacity="0.10"/>
+      <stop offset="60%" stop-color="#d6a35c" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#d6a35c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- backdrop -->
+  <rect x="1" y="1" width="1098" height="338" rx="28" fill="#0c0c0d" stroke="#221f1a" stroke-width="2"/>
+  <rect x="1" y="1" width="1098" height="338" rx="28" fill="url(#glow)"/>
+
+  <!-- the loopy critter (vector, so it renders identically on GitHub) -->
+  <g transform="translate(150,86)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ears -->
+    <polyline points="30,48 48,18 66,48" stroke="#c9c5bd" stroke-width="7"/>
+    <polyline points="100,48 118,18 136,48" stroke="#c9c5bd" stroke-width="7"/>
+    <!-- face sides (the parentheses) -->
+    <path d="M 34,60 Q 16,96 34,132" stroke="#8a8473" stroke-width="5"/>
+    <path d="M 132,60 Q 150,96 132,132" stroke="#8a8473" stroke-width="5"/>
+    <!-- eyes (amber, glossy) -->
+    <circle cx="62" cy="88" r="14" fill="#d6a35c"/>
+    <circle cx="104" cy="88" r="14" fill="#d6a35c"/>
+    <circle cx="57" cy="83" r="4.5" fill="#0c0c0d"/>
+    <circle cx="99" cy="83" r="4.5" fill="#0c0c0d"/>
+    <!-- mouth (ω) -->
+    <path d="M 72,104 Q 79,116 83,105 Q 87,116 94,104" stroke="#e8b96f" stroke-width="4.5"/>
+    <!-- feet (┗┛ ┗┛) -->
+    <rect x="52" y="144" width="20" height="13" rx="3.5" fill="#c9c5bd"/>
+    <rect x="94" y="144" width="20" height="13" rx="3.5" fill="#c9c5bd"/>
+  </g>
+
+  <!-- wordmark + tagline -->
+  <text x="470" y="170" font-family="Georgia, 'Times New Roman', serif" font-size="118" fill="#e8b96f">loopy</text>
+  <text x="476" y="222" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="22" fill="#8a8473" letter-spacing="0.5">the era of prompting is over.</text>
+  <text x="476" y="262" font-family="ui-monospace, 'SF Mono', Menlo, Consolas, monospace" font-size="19" fill="#d6a35c" letter-spacing="0.5">loopyagent.com</text>
+</svg>
