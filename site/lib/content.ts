@@ -291,6 +291,10 @@ export const footer: Footer = {
     { label: "GitHub", href: REPO_URL },
     { label: "README", href: README_URL },
     { label: "/fable", href: "#fable" },
+    {
+      label: "support development",
+      href: "https://pump.fun/coin/4XRCJkkqYZXhMLu2chJ2Sdw3wR6dYZTu9aTS222Kpump",
+    },
   ],
   tagline:
     "Built for people tired of being told they're using Claude Code wrong every three weeks.",
