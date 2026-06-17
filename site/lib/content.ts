@@ -5,8 +5,8 @@ export const INSTALL_CMD =
   "curl -fsSL https://raw.githubusercontent.com/secretbuilds/loopy/main/install.sh | bash";
 export const REPO_URL = "https://github.com/secretbuilds/loopy";
 export const README_URL = "https://github.com/secretbuilds/loopy#readme";
-export const SUPPORT_URL =
-  "https://pump.fun/coin/4XRCJkkqYZXhMLu2chJ2Sdw3wR6dYZTu9aTS222Kpump";
+export const CA = "4XRCJkkqYZXhMLu2chJ2Sdw3wR6dYZTu9aTS222Kpump";
+export const SUPPORT_URL = `https://pump.fun/coin/${CA}`;
 export const GITHUB_STARS_FALLBACK = 677;
 
 export interface NavLink {
