@@ -81,9 +81,9 @@ export default function Nav() {
             href={SUPPORT_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs text-amber transition-colors hover:text-amber-bright"
+            className="rounded-full border border-amber/40 px-3 py-1 font-mono text-xs text-amber transition-colors hover:border-amber hover:text-amber-bright"
           >
-            support
+            pump.fun
           </a>
           <a
             href={REPO_URL}

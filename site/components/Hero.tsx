@@ -5,7 +5,7 @@ import Critter from "@/components/Critter";
 import LoopyField from "@/components/LoopyField";
 import TerminalCard from "@/components/TerminalCard";
 import CopyButton from "@/components/CopyButton";
-import { INSTALL_CMD, hero } from "@/lib/content";
+import { INSTALL_CMD, CA, hero } from "@/lib/content";
 
 // Page-load reveal + proposal slide-in keyframes. Kept inline so this
 // component is self-contained. Under prefers-reduced-motion the global CSS
@@ -122,6 +122,18 @@ export default function Hero() {
             read the docs →
           </a>
         </p>
+      </div>
+
+      {/* Contract address (CA) */}
+      <div
+        style={reveal(0.28)}
+        className="mt-4 flex w-full max-w-xl items-center gap-2 rounded-lg border border-border bg-inset px-3 py-2 text-left"
+      >
+        <span className="shrink-0 font-mono text-xs text-dim">CA</span>
+        <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-xs text-muted">
+          {CA}
+        </code>
+        <CopyButton value={CA} className="shrink-0 text-xs" />
       </div>
 
       {/* Hero visual: "live" terminal with the critter + demo lines */}
